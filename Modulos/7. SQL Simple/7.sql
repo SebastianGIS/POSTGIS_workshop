@@ -34,3 +34,21 @@ SELECT boroname, avg(char_length(name)), stddev(char_length(name))
 -- Se utiliza obligatoriamente cuando combinas columnas normales con funciones 
 -- de agregación (como avg, sum, count) para definir el criterio de agrupación.
 -- Uso básico: GROUP BY columna_categoria;
+
+
+
+SELECT count(*)
+FROM nyc_streets; -- Forma para saber la cantidad de records en la tabla "nyc_streets"
+
+SELECT count(*)
+FROM nyc_streets
+WHERE name LIKE 'B%'; -- Forma para saber la cantidad de calles que comienzan con la letra B. % actúa como comodín
+
+SELECT sum(popn_total) AS Población --Acá se le puede dar un nombre customizado a la tabla (un alias)
+FROM nyc_census_blocks; -- Suma de la columna "popn_total" de la tabla de census blocks. Es para obtener la población total
+
+SELECT boroname, sum(popn_total)
+FROM nyc_census_blocks
+GROUP BY boroname;
+
+

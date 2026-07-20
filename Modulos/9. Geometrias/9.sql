@@ -78,3 +78,38 @@ WHERE name = 'Collection'; --Geometría asociada a colecciones
 
 /* Las geometrías se guardan en un formato que solo PostGIS puede leer, para que estas puedan ser exportadas y leídas por otros
 programas/apps, hay que realizar conversiones, en este sentido, hay varias funciones para conversiones a formatos como WKT, GeoJSON, KML, etc. */
+
+
+-- Resumen
+
+-- TIPOS DE GEOMETRÍAS RELEVANTES
+-- POINT(X Y): Un único par de coordenadas.
+-- LINESTRING(X1 Y1, X2 Y2...): Una secuencia de puntos conectados.
+-- POLYGON((X1 Y1..., X1 Y1)): Una figura cerrada. El primer y último punto coinciden.
+-- POLYGON((Exterior),(Interior)): Polígono con agujero (el 2do anillo resta área).
+-- GEOMETRYCOLLECTION(...): Mezcla de múltiples tipos de geometría en un solo registro.
+
+-- METADATOS Y VISTAS DEL SISTEMA
+-- geometry_columns: Vista global del sistema que cataloga todas las tablas 
+-- con columnas espaciales, mostrando su tipo de geometría, dimensiones y SRID.
+
+-- FUNCIONES DE PROPIEDADES GENERALES
+-- ST_AsText(geom): Convierte el binario interno de PostGIS a formato de texto WKT legible.
+-- ST_GeometryType(geom): Retorna el tipo de objeto (ej. ST_Point, ST_Polygon).
+-- ST_NDims(geom): Indica las dimensiones espaciales (2D, 3D con Z, o 4D con Z y M).
+-- ST_SRID(geom): Retorna el identificador del Sistema de Referencia Espacial.
+
+-- FUNCIONES ESPECÍFICAS PARA PUNTOS
+-- ST_X(geom) / ST_Y(geom): Extraen la coordenada longitudinal o latitudinal de un punto.
+
+-- FUNCIONES ESPECÍFICAS PARA LÍNEAS
+-- ST_Length(geom): Calcula la longitud de la línea en las unidades del SRID.
+-- ST_StartPoint(geom) / ST_EndPoint(geom): Retornan el primer y último vértice como puntos.
+-- ST_NPoints(geom): Cuenta la cantidad total de vértices que componen la línea.
+
+-- FUNCIONES ESPECÍFICAS PARA POLÍGONOS
+-- ST_Area(geom): Calcula la superficie total encerrada (restando los agujeros si existen).
+-- ST_Perimeter(geom): Calcula la longitud sumada de todos sus anillos (exterior + interiores).
+-- ST_NRings(geom): Cuenta el número de anillos (1 si es sólido, >1 si tiene agujeros).
+-- ST_ExteriorRing(geom): Extrae solo el borde externo como una línea (Linestring).
+-- ST_InteriorRingN(geom, n): Extrae el anillo interior número 'n' como una línea.
